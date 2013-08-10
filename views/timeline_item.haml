@@ -1,0 +1,22 @@
+.span4
+  %table.table.table-bordered
+    %tbody
+      %tr
+        %th ID
+        %td= timeline_item.id
+      %tr
+        %th Text
+        %td= timeline_item.text
+      %tr
+        %th Attachments
+        %td
+          - if timeline_item.attachments.length > 0
+            - timeline_item.attachments.each do |attachment|
+              %img{src: "/attachment-proxy?timeline_item_id=#{timeline_item.id}&attachment_id=#{attachment.id}"}
+          - else
+            .muted None
+      %tr
+        %td(colspan="2")
+          %form.form-inliner(method="post" action="/delete-item")
+            %input(type="hidden" name="id" value="#{timeline_item.id}")
+            %button.btn.btn-danger(type="submit") Delete

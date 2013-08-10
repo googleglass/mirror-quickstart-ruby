@@ -1,0 +1,95 @@
+- if @message
+  .alert.alert-info= @message
+
+%h1 Your Recent Timeline
+.row
+  - if @timeline.items.empty?
+    .span12
+      %div.alert.alert-info
+        You haven't added any items to your timeline yet. Use the controls
+        below to add something!
+  - else
+    - @timeline.items.each do |timeline_item|
+      = haml :timeline_item, locals: { timeline_item: timeline_item }
+
+%hr
+
+.row
+  .span4
+    %h2 Timeline
+    %p
+      When you first sign in, this Glassware inserts a welcome message. Use
+      these controls to insert more items into your timeline. Learn more about
+      the timeline APIs
+      = succeed '.' do
+        %a(href="https://developers.google.com/glass/timeline") here
+
+    %form(method="post" action="/insert-item")
+      %textarea.span4(name="message") Hello World!
+      %button.btn.btn-block(type="submit") Insert the above message
+
+    %form(method="post" action="/insert-item")
+      %input(type="hidden" name="message" value="Chipotle says hi!")
+      %input(type="hidden" name="imageUrl" value="images/chipotle-tube-640x360.jpg")
+      %input(type="hidden" name="contentType" value="image/jpeg")
+      %button.btn.btn-block(type="submit")
+        Insert a picture
+        %img.button-icon(src="/images/chipotle-tube-640x360.jpg")
+
+    %form(method="post" action="/insert-item-with-action")
+      %button.btn.btn-block(type="submit")
+        Insert a card you can reply to
+
+    %form(method="post" action="/insert-all-users")
+      %button.btn.btn-block(type="submit")
+        Insert a card to all users
+
+  .span4
+    %h2 Contacts
+    %p
+      By default, this project inserts a single contact that accepts
+      all content types. Learn more about contacts
+      = succeed '.' do
+        %a(href="https://developers.google.com/glass/contacts") here
+
+      - if @contact.nil?
+        %form(method="post" action="/insert-contact")
+          %button.btn.btn-block.btn-success(type="submit")
+            Insert Ruby Quick Start Contact
+      - else
+        %form(method="post" action="/delete-contact")
+          %button.btn.btn-block.btn-danger(type="submit")
+            Delete Ruby Quick Start Contact
+
+  .span4
+    %h2 Subscriptions
+    %p
+      By default a subscription is inserted for changes to the
+      %code timeline
+      collection. Learn more about subscriptions
+      = succeed '.' do
+        %a(href="https://developers.google.com/glass/subscriptions") here
+
+    %p.alert.alert-info
+      Note: Subscriptions require SSL. They will not work on localhost.
+
+    - if @timeline_subscription_exists
+      %form(method="post" action="/delete-subscription")
+        %input(type="hidden" name="subscriptionId" value="timeline")
+        %button.btn.btn-block.btn-danger(type="submit")
+          Unsubscribe from timeline updates
+    - else
+      %form(method="post" action="/insert-subscription")
+        %input(type="hidden" name="subscriptionId" value="timeline")
+        %button.btn.btn-block.btn-success(type="submit")
+          Subscribe to timeline updates
+    - if @location_subscription_exists
+      %form.form-inline(method="post" action="/delete-subscription")
+        %input(type="hidden" name="subscriptionId" value="locations")
+        %button.btn.btn-block.btn-danger(type="submit")
+          Unsubscribe from location updates
+    - else
+      %form(method="post" action="/insert-subscription")
+        %input(type="hidden" name="subscriptionId" value="locations")
+        %button.btn.btn-block.btn-success(type="submit")
+          Subscribe to location updates

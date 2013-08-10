@@ -1,0 +1,18 @@
+!!!
+%html(lang="en")
+  %head
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link(href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet")
+    %link(href="bootstrap/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet")
+    %link(href="application.css" type="text/css" rel="stylesheet")
+    %title Mirror Quick Start
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand(href="#") Glassware Starter Project: Ruby Edition
+    .container
+      = yield
+
+    %script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+    %script(src="bootstrap/js/bootstrap.min.js" type="text/javascript")
