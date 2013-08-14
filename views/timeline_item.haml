@@ -6,7 +6,10 @@
         %td= timeline_item.id
       %tr
         %th Text
-        %td= timeline_item.text
+        %td= Rack::Utils.escape_html(timeline_item.text)
+      %tr
+        %th HTML
+        %td= Rack::Utils.escape_html(timeline_item.html)
       %tr
         %th Attachments
         %td
@@ -17,6 +20,6 @@
             .muted None
       %tr
         %td(colspan="2")
-          %form.form-inliner(method="post" action="/delete-item")
+          %form.form-inline(method="post" action="/delete-item")
             %input(type="hidden" name="id" value="#{timeline_item.id}")
-            %button.btn.btn-danger(type="submit") Delete
+            %button.btn.btn-block.btn-danger(type="submit") Delete
