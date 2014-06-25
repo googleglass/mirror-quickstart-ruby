@@ -261,7 +261,8 @@ class MirrorClient
   # @param [String] user_id
   #   The user token of the user to whom we want to subscribe.
   # @param [String] collection
-  #   The collection ("timeline" or "location") to which we want to subscribe.
+  #   The collection ("timeline" or "locations") to which we want to subscribe.
+  #   See https://developers.google.com/glass/v1/reference/subscriptions/insert for a complete list.
   # @param [String] callback_url
   #   The URL that will receive a POST request when a notification occurs.
   #
